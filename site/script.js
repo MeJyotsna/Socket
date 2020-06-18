@@ -58,7 +58,7 @@ refine = (data) => {
     }
   }
   sortTable(order);
-
+  plotSparkline();
   // to update sparkline graph by 30 seconds.
   if (!intervalBoolean) {
     setInterval(plotSparkline, 30000);
