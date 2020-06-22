@@ -58,31 +58,26 @@ refine = (data) => {
     }
   }
   sortTable(order);
-  plotSparkline();
-  // to update sparkline graph by 30 seconds.
-  if (!intervalBoolean) {
-    setInterval(plotSparkline, 30000);
-    intervalBoolean = true;
-  }
 };
 
-pushToSpark = (name, midprice) => {
-  var jsonObj = {};
-  jsonObj.name = name;
-  jsonObj.values = [midprice];
-  sparkJson.push(jsonObj);
-};
-
-// to draw sparkline
-plotSparkline = () => {
+// to update sparkline graph by 30 seconds.
+setInterval(() => {
   sparkJson.forEach((item) => {
     const exampleSparkline = document.getElementById(item.name);
+    // to draw sparkline
     Sparkline.draw(exampleSparkline, item.values, {
       tooltip: function (value, index, array) {
         return index + 1 + " , " + value.toFixed(4);
       },
     });
   });
+}, 30000);
+
+pushToSpark = (name, midprice) => {
+  var jsonObj = {};
+  jsonObj.name = name;
+  jsonObj.values = [midprice];
+  sparkJson.push(jsonObj);
 };
 
 // toggle order
