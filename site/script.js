@@ -34,7 +34,7 @@ refine = (data) => {
         midprice = (data.bestBid + data.bestAsk) / 2;
         sparkJson.forEach((item) => {
           if (item.name == data[arr[0]]) {
-            if (item.values.length >= 10) {
+            if (item.values.length > 29) {
               item.values.shift();
               item.values.push(midprice);
             } else {
@@ -58,26 +58,26 @@ refine = (data) => {
     }
   }
   sortTable(order);
+  plotSparkline();
 };
-
-// to update sparkline graph by 30 seconds.
-setInterval(() => {
-  sparkJson.forEach((item) => {
-    const exampleSparkline = document.getElementById(item.name);
-    // to draw sparkline
-    Sparkline.draw(exampleSparkline, item.values, {
-      tooltip: function (value, index, array) {
-        return index + 1 + " , " + value.toFixed(4);
-      },
-    });
-  });
-}, 30000);
 
 pushToSpark = (name, midprice) => {
   var jsonObj = {};
   jsonObj.name = name;
   jsonObj.values = [midprice];
   sparkJson.push(jsonObj);
+};
+
+// to draw sparkline
+plotSparkline = () => {
+  sparkJson.forEach((item) => {
+    const exampleSparkline = document.getElementById(item.name);
+    Sparkline.draw(exampleSparkline, item.values, {
+      tooltip: function (value, index, array) {
+        return index + 1 + " , " + value.toFixed(4);
+      },
+    });
+  });
 };
 
 // toggle order
