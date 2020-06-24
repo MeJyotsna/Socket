@@ -34,7 +34,7 @@ refine = (data) => {
         midprice = (data.bestBid + data.bestAsk) / 2;
         sparkJson.forEach((item) => {
           if (item.name == data[arr[0]]) {
-            if (item.values.length > 29) {
+            if (data.timer > 29) {
               item.values.shift();
               item.values.push(midprice);
             } else {
